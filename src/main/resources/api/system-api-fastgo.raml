@@ -1,0 +1,82 @@
+#%RAML 1.0
+title: RetrieveConsolidatedRoutesAndSchedules FastGo SAPI
+description: this raml will fatch Routes and schedules from fastGo transfort
+types:
+  getroutesresponse: !include /libraries/routes/Datatype/getroutes-200response-dataType.raml
+  gerschedulesresponse: !include /libraries/schedules/Datatype/getschedule-200response-dataType.raml
+  commonErrorhandler: !include /libraries/common/datatypes/commomError-dataType.raml
+uses:
+  common: /libraries/common/common-library.raml
+  routes: libraries/routes/getroute-library.raml
+  schedules: libraries/schedules/getschedules-library.raml
+  Errorhadler: libraries/common/common-library.raml
+
+/{transportType}:
+ /{transportCompany}:
+  /routes:
+    get:
+      is:
+        - common.transactionId
+      responses:
+        200:
+          body:
+            application/json:
+              type: routes.getroutesdatatypes
+              example: !include /libraries/routes/examples/getroutes-200response-example.json
+                
+        400:
+          body:
+              application/json:
+                type: Errorhadler.Error
+                example: !include /libraries/common/examples/400response-example.json
+        404:
+          body:
+              application/json:
+                type: Errorhadler.Error
+                example: !include /libraries/common/examples/404response-example.json
+        500:
+          body:
+              application/json:
+                type: Errorhadler.Error
+                example: !include /libraries/common/examples/500response-example.json
+  /schedules:
+    get:
+      is:
+        - common.transactionId
+        - common.departureLocationCode
+        - common.destinationLocationCode
+      responses:
+        200:
+          body:
+            application/json:
+              type: schedules.getscheduledatatype
+              example: !include /libraries/schedules/examples/gerschedules-200response-example.json
+
+        400:
+          body:
+              application/json:
+                type: Errorhadler.Error
+                example: !include /libraries/common/examples/400response-example.json
+        404:
+          body:
+              application/json:
+                type: Errorhadler.Error
+                example: !include /libraries/common/examples/404response-example.json 
+        500:
+          body:
+              application/json:
+                type: Errorhadler.Error
+                example: !include /libraries/common/examples/500response-example.json
+                        
+                            
+              
+          
+                
+
+        
+      
+        
+
+
+                                                                                       
+      
